@@ -1,7 +1,5 @@
 package us.jfreedman.src.ns.frc.client;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import us.jfreedman.src.ns.frc.common.packets.Packet;
 
 import java.io.ObjectOutputStream;
@@ -33,7 +31,7 @@ public class NS extends Thread implements Runnable {
 
     public synchronized static void connect(Consumer<Object> success, Consumer<Object> failure) {
         try {
-            serverConnection = new Socket("localhost", 7093);
+            serverConnection = new Socket("10.38.2.244", 7093);
             serverConnection.setKeepAlive(true);
             os = new ObjectOutputStream(serverConnection.getOutputStream());
         } catch (Exception e) {
@@ -105,7 +103,7 @@ public class NS extends Thread implements Runnable {
         E failure;
         long initTime;
 
-        public Node(@NotNull T packet, @Nullable S success, @Nullable E failure, long initTime) {
+        public Node(T packet, S success, E failure, long initTime) {
             this.packet = packet;
             this.success = success;
             this.failure = failure;

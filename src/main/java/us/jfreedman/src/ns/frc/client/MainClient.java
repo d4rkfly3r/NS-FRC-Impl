@@ -12,8 +12,8 @@ import us.jfreedman.src.ns.frc.common.packets.Packet03;
 public class MainClient {
 
     public MainClient() {
-        new NS().start();
         NS.connect(null, System.err::println);
+        new NS().start();
         NS.addQueue(new Packet01("TeST").setDataType(Packet.Type.SERIALIZED), null, null);
         NS.addQueue(new Packet01("Hello").setDataType(Packet.Type.SERIALIZED), o -> System.out.println("SUCCESS"), null);
         NS.addQueue(new Packet01("HI!").setDataType(Packet.Type.SERIALIZED), null, null);
