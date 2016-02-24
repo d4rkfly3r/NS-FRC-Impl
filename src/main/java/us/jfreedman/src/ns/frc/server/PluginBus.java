@@ -45,7 +45,13 @@ public class PluginBus {
     }
 
     public void init() {
-        plugins = ClassFinder.getPluginClasses();
+        ClassFinder.getPluginClasses().forEach(aClass1 -> {
+            try {
+                plugins.put(aClass1, aClass1.newInstance());
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
         System.out.println("Plugins: ");
         plugins.forEach((aClass, instance) -> System.out.println("\t" + aClass.getName()));
     }
