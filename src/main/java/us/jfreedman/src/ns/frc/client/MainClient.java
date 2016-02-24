@@ -12,7 +12,7 @@ import us.jfreedman.src.ns.frc.common.packets.Packet03;
 public class MainClient {
 
     public MainClient() {
-        NS.connect(null, System.err::println);
+        NS.connect("127.0.0.1", null, System.err::println);
         new NS().start();
         NS.addQueue(new Packet01("TeST").setDataType(Packet.Type.SERIALIZED), null, null);
         NS.addQueue(new Packet01("Hello").setDataType(Packet.Type.SERIALIZED), o -> System.out.println("SUCCESS"), null);

@@ -29,9 +29,9 @@ public class NS extends Thread implements Runnable {
         dataQueue.add(new Node(t, success, failure, System.currentTimeMillis()));
     }
 
-    public synchronized static void connect(Consumer<Object> success, Consumer<Object> failure) {
+    public synchronized static void connect(String host, Consumer<Object> success, Consumer<Object> failure) {
         try {
-            serverConnection = new Socket("10.38.2.244", 7093);
+            serverConnection = new Socket(host, 7093);
             serverConnection.setKeepAlive(true);
             os = new ObjectOutputStream(serverConnection.getOutputStream());
         } catch (Exception e) {

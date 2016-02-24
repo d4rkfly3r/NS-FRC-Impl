@@ -2,10 +2,14 @@ package us.jfreedman.src.ns.frc.server;
 
 import us.jfreedman.src.ns.frc.common.Listener;
 import us.jfreedman.src.ns.frc.common.packets.Packet;
+import us.jfreedman.src.ns.frc.common.packets.Packet99;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Joshua Freedman on 2/23/2016.
@@ -53,6 +57,10 @@ public class PluginBus {
             }
         });
         System.out.println("Plugins: ");
-        plugins.forEach((aClass, instance) -> System.out.println("\t" + aClass.getName()));
+        plugins.forEach((aClass, instance) -> {
+            System.out.println("\t" + aClass.getName());
+        });
+
+        firePacket(new Packet99());
     }
 }
