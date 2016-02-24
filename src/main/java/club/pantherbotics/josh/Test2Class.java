@@ -1,4 +1,4 @@
-package pantherbotics.josh;
+package club.pantherbotics.josh;
 
 import us.jfreedman.src.ns.frc.common.Plugin;
 
