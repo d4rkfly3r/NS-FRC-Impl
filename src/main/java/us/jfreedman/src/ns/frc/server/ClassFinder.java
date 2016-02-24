@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
  * Project: NS-FRC-Impl
  */
 public class ClassFinder {
-    protected static Vector<Class<?>> getPluginClasses() {
+    protected static HashMap<Class<?>, Object> getPluginClasses() {
         return findSubclasses(Plugin.class, getClasspathLocations());
     }
 
-    private static Vector<Class<?>> findSubclasses(Class<?> annotationClass, Map<URL, String> locations) {
+    private static HashMap<Class<?>, Object> findSubclasses(Class<?> annotationClass, Map<URL, String> locations) {
         Vector<Class<?>> v = new Vector<>();
         Vector<Class<?>> w;
 
@@ -81,7 +81,6 @@ public class ClassFinder {
                                 classname = classname.substring(1);
                             }
                             classname = classname.replace('/', '.');
-
 
                             try {
                                 // TODO: verify this block

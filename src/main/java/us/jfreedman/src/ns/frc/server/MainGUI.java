@@ -1,8 +1,7 @@
 package us.jfreedman.src.ns.frc.server;
 
-import us.jfreedman.src.ns.frc.common.Plugin;
-
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by Joshua Freedman on 2/23/2016.
@@ -15,15 +14,21 @@ public class MainGUI extends JFrame {
         return ourInstance;
     }
 
+    public TextArea logTextArea;
+
     private MainGUI() {
         super("Main GUI");
         this.setSize(500, 300);
         this.setVisible(true);
+        this.setAlwaysOnTop(true);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        logTextArea = new TextArea();
+        this.add(logTextArea);
     }
 
     public void setup() {
-        ClassFinder.getPluginClasses().forEach(aClass -> System.out.println(aClass.getAnnotation(Plugin.class).name()));
+        PluginBus.getInstance().init();
     }
 
 }

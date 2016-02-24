@@ -27,7 +27,7 @@ public class MainServer {
                         try {
                             Object unknown = objectInputStream.readObject();
                             if (unknown instanceof Packet<?>) {
-                                ((Packet) unknown).handle();
+                                PluginBus.getInstance().firePacket((Packet) unknown);
                             }
                         } catch (EOFException ignored) {
                         } catch (SocketException e0) {
