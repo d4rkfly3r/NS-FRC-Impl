@@ -1,6 +1,7 @@
 package us.jfreedman.src.ns.frc.server;
 
 import us.jfreedman.src.ns.frc.common.Listener;
+import us.jfreedman.src.ns.frc.common.Logger;
 import us.jfreedman.src.ns.frc.common.packets.Packet;
 import us.jfreedman.src.ns.frc.common.packets.Packet99;
 
@@ -16,6 +17,9 @@ import java.util.List;
  * Project: NS-FRC-Impl
  */
 public class PluginBus {
+
+    Logger logger = new Logger();
+
     private static PluginBus ourInstance = new PluginBus();
 
     public static PluginBus getInstance() {
@@ -56,9 +60,9 @@ public class PluginBus {
                 e.printStackTrace();
             }
         });
-        System.out.println("Plugins: ");
+        logger.log("Plugins: ");
         plugins.forEach((aClass, instance) -> {
-            System.out.println("\t" + aClass.getName());
+            logger.log("\t" + aClass.getName());
         });
     }
 }

@@ -1,5 +1,6 @@
 package us.jfreedman.src.ns.frc.server.injector;
 
+import us.jfreedman.src.ns.frc.common.Logger;
 import us.jfreedman.src.ns.frc.common.injector.Inject;
 import us.jfreedman.src.ns.frc.server.PluginBus;
 
@@ -13,6 +14,8 @@ import java.util.List;
  * Project: NS-FRC-Impl
  */
 public class Injector {
+    Logger logger = new Logger();
+
     private static Injector ourInstance = new Injector();
 
     public static Injector getInstance() {
@@ -23,9 +26,9 @@ public class Injector {
     }
 
     public <T> Injector inject(T t) {
-        System.out.println("Starting!");
+        logger.debug("Starting!");
         PluginBus.getInstance().plugins.forEach((aClass, o) -> {
-            System.out.println("Plugin: " + aClass);
+            logger.debug("Plugin: " + aClass);
             List<Field> fields = new ArrayList<>();
             Collections.addAll(fields, aClass.getDeclaredFields());
             fields.stream()
@@ -35,7 +38,7 @@ public class Injector {
                         try {
                             field.setAccessible(true);
                             field.set(o, t);
-                            System.out.println(field.get(o));
+                            logger.debug(field.get(o));
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
                         }
