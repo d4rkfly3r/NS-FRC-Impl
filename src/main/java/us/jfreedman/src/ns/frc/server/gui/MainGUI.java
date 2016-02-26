@@ -1,4 +1,7 @@
-package us.jfreedman.src.ns.frc.server;
+package us.jfreedman.src.ns.frc.server.gui;
+
+import us.jfreedman.src.ns.frc.common.packets.Packet99;
+import us.jfreedman.src.ns.frc.server.PluginBus;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,13 +13,7 @@ import java.awt.*;
 public class MainGUI extends JFrame {
     private static final int SCALE = 400;
 
-    private static MainGUI ourInstance = new MainGUI();
-
-    public static MainGUI getInstance() {
-        return ourInstance;
-    }
-
-    private MainGUI() {
+    public MainGUI() {
         super("Main GUI");
         this.setSize(5 * SCALE, 3 * SCALE);
         this.setUndecorated(true);
@@ -41,7 +38,7 @@ public class MainGUI extends JFrame {
     }
 
     public MainGUI setup() {
-        PluginBus.getInstance().init();
+        PluginBus.getInstance().firePacket(new Packet99());
         return this;
     }
 

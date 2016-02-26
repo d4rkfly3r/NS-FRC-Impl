@@ -22,7 +22,7 @@ public class PluginBus {
         return ourInstance;
     }
 
-    private HashMap<Class<?>, Object> plugins;
+    public final HashMap<Class<?>, Object> plugins;
 
     private PluginBus() {
         plugins = new HashMap<>();
@@ -60,7 +60,5 @@ public class PluginBus {
         plugins.forEach((aClass, instance) -> {
             System.out.println("\t" + aClass.getName());
         });
-
-        firePacket(new Packet99());
     }
 }

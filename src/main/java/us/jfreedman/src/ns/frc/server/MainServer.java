@@ -1,7 +1,11 @@
 package us.jfreedman.src.ns.frc.server;
 
 import us.jfreedman.src.ns.frc.common.Logger;
+import us.jfreedman.src.ns.frc.common.Plugin;
+import us.jfreedman.src.ns.frc.common.injector.Inject;
 import us.jfreedman.src.ns.frc.common.packets.Packet;
+import us.jfreedman.src.ns.frc.server.gui.MainGUI;
+import us.jfreedman.src.ns.frc.server.injector.Injector;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -16,12 +20,17 @@ import java.net.SocketException;
  */
 public class MainServer {
 
+    MainGUI mainGUI = new MainGUI();
+
     public MainServer() {
         Logger logger = new Logger();
+        PluginBus.getInstance().init();
+        Injector.getInstance().inject(new MainGUI());
         try {
             ServerSocket serverSocket = new ServerSocket(7093, 3);
             Socket client;
-            MainGUI.getInstance().setup();
+            mainGUI.setup();
+
             while (true) {
                 client = serverSocket.accept();
                 try (ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream())) {
