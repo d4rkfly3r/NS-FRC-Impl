@@ -13,7 +13,13 @@ import java.awt.*;
 public class MainGUI extends JFrame {
     private static final int SCALE = 400;
 
-    public MainGUI() {
+    private static MainGUI ourInstance = new MainGUI();
+
+    public static MainGUI getInstance() {
+        return ourInstance;
+    }
+
+    private MainGUI() {
         super("Main GUI");
         this.setSize(5 * SCALE, 3 * SCALE);
         this.setUndecorated(true);
