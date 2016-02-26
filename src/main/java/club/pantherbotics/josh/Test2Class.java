@@ -19,14 +19,15 @@ import java.awt.*;
 @Plugin(name = "Test Me")
 public class Test2Class {
 
-    Logger logger = new Logger(Logger.ANSI_PURPLE + "[TestPL] " + Logger.ANSI_RESET);
-
     TextArea logTextArea = new TextArea();
     Button exitButton = new Button("Exit");
     Button minimizeButton = new Button("Minimize");
 
     @Inject
     MainGUI mainGUI;
+
+    @Inject
+    Logger logger;
 
     @Listener
     public void init(Packet99 ignored) {
@@ -63,7 +64,6 @@ public class Test2Class {
 
     @Listener
     public void defPacket(Packet01 packet01) {
-        System.out.println(packet01.getExtra());
         logTextArea.append(packet01.getExtra() + "\n");
         logger.log(packet01.getExtra());
     }

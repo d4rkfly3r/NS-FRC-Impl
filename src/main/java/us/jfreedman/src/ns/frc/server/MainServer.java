@@ -24,6 +24,7 @@ public class MainServer {
         Logger logger = new Logger();
         PluginBus.getInstance().init();
         Injector.getInstance().inject(MainGUI.getInstance());
+        Injector.getInstance().inject(Logger.class);
         try {
             ServerSocket serverSocket = new ServerSocket(7093, 3);
             Socket client;

@@ -43,6 +43,10 @@ public class Logger {
         this(new ArrayList<>(), ANSI_PURPLE + "[NS-FRC] " + ANSI_RESET, "");
     }
 
+    public Logger(Class clazz) {
+        this(ANSI_PURPLE + "[" + clazz.getSimpleName() + "] " + ANSI_RESET);
+    }
+
     public Logger(ArrayList<String> pastLog) {
 
         this(pastLog, ANSI_PURPLE + "[NS-FRC] " + ANSI_RESET, "");

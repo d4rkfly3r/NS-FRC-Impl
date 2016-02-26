@@ -3,6 +3,7 @@ package us.jfreedman.src.ns.frc.client;
 import us.jfreedman.src.ns.frc.common.packets.Packet;
 
 import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -31,8 +32,10 @@ public class NS extends Thread implements Runnable {
 
     public synchronized static void connect(String host, Consumer<Object> success, Consumer<Object> failure) {
         try {
-            serverConnection = new Socket(host, 7093);
+            serverConnection = new Socket();
             serverConnection.setKeepAlive(true);
+            serverConnection.connect(new InetSocketAddress(host, 7093));
+
             os = new ObjectOutputStream(serverConnection.getOutputStream());
         } catch (Exception e) {
             if (failure != null) {
