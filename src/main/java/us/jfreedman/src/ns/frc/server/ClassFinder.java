@@ -35,7 +35,10 @@ public class ClassFinder {
 
     private static Vector<Class<?>> findSubclasses(URL location, String packageName, Class<?> annotationClass) {
 
-        if (!packageName.startsWith("club.pantherbotics")) return new Vector<>();
+        if (location.getFile().contains("/jre/lib/") || location.getFile().contains("idea_rt.jar"))
+            return new Vector<>();
+
+        System.out.println(location);
 
         Map<Class<?>, URL> thisResult = new TreeMap<>((c1, c2) -> String.valueOf(c1).compareTo(String.valueOf(c2)));
         Vector<Class<?>> v = new Vector<>();

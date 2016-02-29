@@ -3,7 +3,6 @@ package us.jfreedman.src.ns.frc.server;
 import us.jfreedman.src.ns.frc.common.Listener;
 import us.jfreedman.src.ns.frc.common.Logger;
 import us.jfreedman.src.ns.frc.common.packets.Packet;
-import us.jfreedman.src.ns.frc.common.packets.Packet99;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
