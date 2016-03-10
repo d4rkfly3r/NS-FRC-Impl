@@ -23,15 +23,14 @@ public class TransmissionInfoPlugin {
     private JLabel graphic = new JLabel();
 
     @Inject
-    private
-    MainGUI mainGUI;
+    private MainGUI mainGUI;
 
     @Inject
-    private
-    Logger logger;
+    private Logger logger;
 
     @Listener
     public void onInit(Packet99 packet) {
+
         graphic.setFont(new Font("Arial", Font.BOLD, 40));
         graphic.setHorizontalAlignment(SwingConstants.CENTER);
         graphic.setVerticalAlignment(SwingConstants.CENTER);

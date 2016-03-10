@@ -11,11 +11,9 @@ import us.jfreedman.src.ns.frc.common.packets.Packet99;
 import us.jfreedman.src.ns.frc.server.gui.MainGUI;
 
 import javax.swing.*;
-import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.MouseEvent;
 
 /**
  * Created by Joshua Freedman on 2/23/2016.
@@ -93,22 +91,5 @@ public class BasicControlPlugin {
     public void stringPacket(Packet03 packet03) {
         logTextArea.append(packet03.getKey() + " | " + packet03.getString() + "\n");
         logger.log(packet03.getKey() + " | " + packet03.getString());
-    }
-
-    public class DragListener extends MouseInputAdapter {
-        Point location;
-        MouseEvent pressed;
-
-        public void mousePressed(MouseEvent me) {
-            pressed = me;
-        }
-
-        public void mouseDragged(MouseEvent me) {
-            Component component = me.getComponent();
-            location = component.getLocation(location);
-            int x = location.x - pressed.getX() + me.getX();
-            int y = location.y - pressed.getY() + me.getY();
-            component.setLocation(x, y);
-        }
     }
 }

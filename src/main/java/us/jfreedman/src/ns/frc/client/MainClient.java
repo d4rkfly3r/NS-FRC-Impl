@@ -3,7 +3,8 @@ package us.jfreedman.src.ns.frc.client;
 import us.jfreedman.src.ns.frc.common.packets.Packet01;
 import us.jfreedman.src.ns.frc.common.packets.Packet02;
 import us.jfreedman.src.ns.frc.common.packets.Packet03;
-import us.jfreedman.src.ns.frc.common.packets.Packet05;
+
+import java.util.Random;
 
 /**
  * Created by Joshua Freedman on 2/23/2016.
@@ -22,13 +23,12 @@ public class MainClient {
         NS.addQueue(new Packet03("Josh", "This is MIKE!"), null, null);
 //        NS.addQueue(new Packet05("Transmission", true), null, o -> NS.addQueue(new Packet05("Transmission", true), null, null));
 
-        transmission();
+        randomify();
     }
 
-    private void transmission() {
-        NS.addQueue(new Packet05("Transmission", true), null, o -> {
-            System.err.println("Failing");
-            transmission();
-        });
+    Random random = new Random();
+
+    private void randomify() {
+        NS.addQueue(new Packet02("Arm Position", random.nextDouble() * 5), o -> randomify(), o -> randomify());
     }
 }
