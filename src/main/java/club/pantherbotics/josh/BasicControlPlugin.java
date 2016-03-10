@@ -24,14 +24,16 @@ import java.awt.event.MouseEvent;
 @Plugin(name = "Basic Control Plugin")
 public class BasicControlPlugin {
 
-    TextArea logTextArea = new TextArea();
-    JButton exitButton = new JButton("Exit");
-    JButton minimizeButton = new JButton("Minimize");
+    private TextArea logTextArea = new TextArea();
+    private JButton exitButton = new JButton("Exit");
+    private JButton minimizeButton = new JButton("Minimize");
 
     @Inject
+    private
     MainGUI mainGUI;
 
     @Inject
+    private
     Logger logger;
 
     @Listener

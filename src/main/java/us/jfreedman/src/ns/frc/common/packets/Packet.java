@@ -13,11 +13,13 @@ public abstract class Packet<T extends Packet> implements Serializable {
     protected Type dataType;
     protected long timeout = -1;
 
+    @SuppressWarnings("unchecked")
     public T setDataType(Type dataType) {
         this.dataType = dataType;
         return (T) this;
     }
 
+    @SuppressWarnings("unchecked")
     public T setTimeout(long timeout) {
         this.timeout = timeout;
         return (T) this;

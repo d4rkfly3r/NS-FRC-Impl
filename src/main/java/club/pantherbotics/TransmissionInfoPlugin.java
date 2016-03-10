@@ -20,12 +20,14 @@ import java.awt.event.ComponentEvent;
 @Plugin(name = "Transmission Info Plugin")
 public class TransmissionInfoPlugin {
 
-    JLabel graphic = new JLabel();
+    private JLabel graphic = new JLabel();
 
     @Inject
+    private
     MainGUI mainGUI;
 
     @Inject
+    private
     Logger logger;
 
     @Listener

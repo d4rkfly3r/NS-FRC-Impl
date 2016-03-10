@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class PluginBus {
 
-    Logger logger = new Logger();
+    private Logger logger = new Logger();
 
     private static PluginBus ourInstance = new PluginBus();
 
@@ -60,8 +60,6 @@ public class PluginBus {
             }
         });
         logger.log("Plugins: ");
-        plugins.forEach((aClass, instance) -> {
-            logger.log("\t" + aClass.getName());
-        });
+        plugins.forEach((aClass, instance) -> logger.log("\t" + aClass.getName()));
     }
 }

@@ -13,7 +13,7 @@ import java.util.function.Consumer;
  * Created by Joshua Freedman on 2/23/2016.
  * Project: NS-FRC-Impl
  */
-public class NS extends Thread implements Runnable {
+class NS extends Thread implements Runnable {
 
     private static Socket serverConnection = null;
     private static BlockingQueue<Node<Packet, Consumer<Object>, Consumer<Object>>> dataQueue = new LinkedBlockingQueue<>();
@@ -21,7 +21,7 @@ public class NS extends Thread implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (isAlive()) {
             if (!serverConnection.isConnected()) {
                 NS.connect("127.0.0.1", null, System.err::println);
             }
@@ -53,7 +53,7 @@ public class NS extends Thread implements Runnable {
         }
     }
 
-    public synchronized static void fireData(Consumer<Object> success, Consumer<Object> failure) {
+    private synchronized static void fireData(Consumer<Object> success, Consumer<Object> failure) {
         try {
             if (!dataQueue.isEmpty()) {
                 dataQueue.removeIf(node -> node.packet.getTimeout() != -1 && System.currentTimeMillis() - node.initTime >= node.packet.getTimeout());

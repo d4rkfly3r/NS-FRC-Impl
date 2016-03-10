@@ -15,7 +15,7 @@ import java.util.List;
  * Project: NS-FRC-Impl
  */
 public class Injector {
-    Logger logger = new Logger(Injector.class);
+    private Logger logger = new Logger(Injector.class);
 
     private static Injector ourInstance = new Injector();
 

@@ -18,7 +18,7 @@ import java.net.SocketException;
  */
 public class MainServer {
 
-    MainGUI mainGUI = MainGUI.getInstance();
+    private MainGUI mainGUI = MainGUI.getInstance();
 
     public MainServer() {
         Logger logger = new Logger();
@@ -30,7 +30,7 @@ public class MainServer {
             Socket client;
             mainGUI.setup();
 
-            while (true) {
+            while (!serverSocket.isClosed()) {
                 client = serverSocket.accept();
                 try (ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream())) {
                     while (client.isConnected()) {

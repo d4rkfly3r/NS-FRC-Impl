@@ -7,7 +7,7 @@ import us.jfreedman.src.ns.frc.server.MainServer;
  * Created by Joshua Freedman on 2/23/2016.
  * Project: NS-FRC-Impl
  */
-public class MainClass {
+class MainClass {
 
     public static void main(String[] args) {
         if (args.length < 1) return;

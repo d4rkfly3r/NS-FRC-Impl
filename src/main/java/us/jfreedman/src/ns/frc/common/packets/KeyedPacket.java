@@ -6,7 +6,7 @@ package us.jfreedman.src.ns.frc.common.packets;
  */
 public class KeyedPacket<T> extends Packet<KeyedPacket<T>> {
 
-    protected String key;
+    String key;
 
     public String getKey() {
         return key;

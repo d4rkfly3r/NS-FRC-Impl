@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
  * Created by Joshua Freedman on 2/23/2016.
  * Project: NS-FRC-Impl
  */
-public class ClassFinder {
-    protected static Vector<Class<?>> getPluginClasses() {
+class ClassFinder {
+    static Vector<Class<?>> getPluginClasses() {
         return findSubclasses(Plugin.class, getClasspathLocations());
     }
 
