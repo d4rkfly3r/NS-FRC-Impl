@@ -82,7 +82,7 @@ public class Logger {
     public void debug(Object message) {
         this.time = Calendar.getInstance();
         if (message != null && logLevel < 5) {
-            String msg = ANSI_YELLOW + "DEBUG" + ANSI_RESET + " [" + sdf.format(this.time.getTime()) + "] " + prefix + message.toString() + suffix + cleanupCode;
+            String msg = "[" + sdf.format(this.time.getTime()) + "]" + ANSI_YELLOW + " DEBUG  " + prefix + message.toString() + suffix + cleanupCode;
             log.add(msg.replaceAll("(\\[[0-99]+m)", "") + "\n");
             System.out.println(msg);
         }
@@ -100,7 +100,7 @@ public class Logger {
     public void debugError(String message) {
         this.time = Calendar.getInstance();
         if (message != null && logLevel < 5) {
-            String msg = ANSI_YELLOW + "DEBUG" + ANSI_RESET + " [" + sdf.format(this.time.getTime()) + "] " + ERROR + message + ERROR_SUFFIX + cleanupCode;
+            String msg = "[" + sdf.format(this.time.getTime()) + "]" + ANSI_YELLOW + " DEBUG  " + ERROR + message + ERROR_SUFFIX + cleanupCode;
             log.add(msg.replaceAll("(\\[[0-99]+m)", "") + "\n");
             System.out.println(ANSI_RED + msg);
         }
@@ -109,7 +109,7 @@ public class Logger {
     public void log(Object message) {
         this.time = Calendar.getInstance();
         if (message != null) {
-            String msg = "[" + sdf.format(this.time.getTime()) + "] " + prefix + message.toString() + suffix + cleanupCode;
+            String msg = "[" + sdf.format(this.time.getTime()) + "]" + ANSI_BLUE + " NORMAL " + prefix + message.toString() + suffix + cleanupCode;
             log.add(msg.replaceAll("(\\[[0-99]+m)", "") + "\n");
             System.out.println(msg);
         }
@@ -127,7 +127,7 @@ public class Logger {
     public void logError(String message) {
         this.time = Calendar.getInstance();
         if (message != null) {
-            String msg = "[" + sdf.format(this.time.getTime()) + "] " + ERROR + message + ERROR_SUFFIX + cleanupCode;
+            String msg = "[" + sdf.format(this.time.getTime()) + "]" + ANSI_RED + " ERROR " + message + ERROR_SUFFIX + cleanupCode;
             log.add(msg.replaceAll("(\\[[0-99]+m)", "") + "\n");
             System.out.println(ANSI_RED + msg);
         }

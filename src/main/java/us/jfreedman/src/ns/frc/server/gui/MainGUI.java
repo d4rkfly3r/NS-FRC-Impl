@@ -30,7 +30,7 @@ public class MainGUI extends JFrame {
     public MainGUI lockWindow() {
         this.setVisible(false);
         this.setAlwaysOnTop(true);
-        this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width, 600);
+        this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width, 2 * (Toolkit.getDefaultToolkit().getScreenSize().height / 3));
         this.setVisible(true);
         return this;
     }
@@ -44,7 +44,7 @@ public class MainGUI extends JFrame {
     }
 
     public MainGUI setup() {
-        PluginBus.getInstance().firePacket(new Packet99());
+        PluginBus.getInstance().firePacket(new Packet99(PluginBus.getInstance().plugins));
         return this;
     }
 

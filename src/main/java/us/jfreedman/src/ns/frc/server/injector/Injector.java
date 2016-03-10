@@ -15,7 +15,7 @@ import java.util.List;
  * Project: NS-FRC-Impl
  */
 public class Injector {
-    Logger logger = new Logger();
+    Logger logger = new Logger(Injector.class);
 
     private static Injector ourInstance = new Injector();
 
@@ -46,7 +46,7 @@ public class Injector {
         return this;
     }
 
-    public Injector inject(Class t) {
+    public Injector inject(Class<?> t) {
         PluginBus.getInstance().plugins.forEach((aClass, o) -> {
             List<Field> fields = new ArrayList<>();
             Collections.addAll(fields, aClass.getDeclaredFields());

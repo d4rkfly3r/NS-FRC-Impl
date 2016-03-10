@@ -22,12 +22,15 @@ public class NS extends Thread implements Runnable {
     @Override
     public void run() {
         while (true) {
+            if (!serverConnection.isConnected()) {
+                NS.connect("127.0.0.1", null, System.err::println);
+            }
             fireData(null, System.err::println);
         }
     }
 
     public synchronized static <T extends Packet> void addQueue(T t, Consumer<Object> success, Consumer<Object> failure) {
-        dataQueue.add(new Node(t, success, failure, System.currentTimeMillis()));
+        dataQueue.add(new Node<>(t, success, failure, System.currentTimeMillis()));
     }
 
     public synchronized static void connect(String host, Consumer<Object> success, Consumer<Object> failure) {
