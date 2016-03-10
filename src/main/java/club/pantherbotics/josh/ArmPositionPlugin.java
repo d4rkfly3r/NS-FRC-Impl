@@ -1,5 +1,6 @@
 package club.pantherbotics.josh;
 
+import us.jfreedman.src.ns.frc.common.DragListener;
 import us.jfreedman.src.ns.frc.common.Listener;
 import us.jfreedman.src.ns.frc.common.Logger;
 import us.jfreedman.src.ns.frc.common.Plugin;
@@ -18,9 +19,10 @@ import java.awt.*;
 @Plugin(name = "Arm Position Widget")
 public class ArmPositionPlugin {
 
-    double x = 0;
+    double currentPosition = 1;
 
-    JPanel jPanel = new DialJPanel();
+    JPanel dialPanel = new DialJPanel();
+
 
     @Inject
     MainGUI mainGUI;
@@ -31,44 +33,49 @@ public class ArmPositionPlugin {
     @Listener
     public void onInit(Packet99 ignored) {
 
-        jPanel.setSize(300, 300);
-        jPanel.setLocation(200, 200);
+        DragListener dragListener = new DragListener();
+        dialPanel.setOpaque(false);
+        dialPanel.addMouseListener(dragListener);
+        dialPanel.addMouseMotionListener(dragListener);
+        dialPanel.setSize(300, 300);
+        dialPanel.setLocation(200, 200);
 
-        mainGUI.add(jPanel);
+        mainGUI.add(dialPanel);
 
         logger.debug("YO");
 
-        jPanel.repaint();
+        dialPanel.repaint();
         mainGUI.repaint();
     }
 
     @Listener
     public void onNumberPacket(Packet02 packet02) {
         if (packet02.getKey().equals("Arm Position")) {
-            x = packet02.getNumber().doubleValue();
-            jPanel.repaint();
+            currentPosition = packet02.getNumber().doubleValue();
+            dialPanel.repaint();
         }
     }
 
     private class DialJPanel extends JPanel {
 
         @Override
-        public void paint(Graphics g2) {
-            super.paint(g2);
-            Graphics2D g = (Graphics2D) g2;
+        public void paint(Graphics graphics) {
+            super.paint(graphics);
+            Graphics2D g = (Graphics2D) graphics;
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             g.setStroke(new BasicStroke(3));
-            g.setColor(Color.CYAN);
-            g.fillRect(0, 0, getWidth(), getHeight());
+//            g.setColor(Color.CYAN);
+//            g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(Color.BLACK);
-            g.fillArc(5, 5, jPanel.getWidth() - 10, jPanel.getHeight() - 10, -10, 200);
+            g.fillArc(5, 5, dialPanel.getWidth() - 10, dialPanel.getHeight() - 10, -10, 200);
             g.setColor(Color.red);
-            g.drawLine(jPanel.getWidth() / 2, jPanel.getHeight() / 2, (jPanel.getWidth() / 2) - (int) (Math.cos((Math.abs(x)) * (Math.PI / 5)) * (jPanel.getWidth() / 2 - 40)), (jPanel.getWidth() / 2) - (int) (Math.sin((Math.abs(x)) * (Math.PI / 5)) * (jPanel.getWidth() / 2 - 40)));
-            g.fillArc(jPanel.getWidth() / 2 - 10, jPanel.getHeight() / 2 - 10, 20, 20, 0, 360);
+            g.drawLine(dialPanel.getWidth() / 2, dialPanel.getHeight() / 2, (dialPanel.getWidth() / 2) - (int) (Math.cos((Math.abs(currentPosition)) * (Math.PI / 5)) * (dialPanel.getWidth() / 2 - 40)), (dialPanel.getWidth() / 2) - (int) (Math.sin((Math.abs(currentPosition)) * (Math.PI / 5)) * (dialPanel.getWidth() / 2 - 40)));
+            g.fillArc(dialPanel.getWidth() / 2 - 10, dialPanel.getHeight() / 2 - 10, 20, 20, 0, 360);
             g.setColor(Color.yellow);
             g.setFont(new Font("Arial", Font.BOLD, 16));
             for (int i = 0; i < 6; i++) {
-                g.drawString(i + "", ((jPanel.getWidth() / 2) - (int) (Math.cos((Math.abs(i)) * (Math.PI / 5)) * (jPanel.getWidth() / 2 - 30))) - 5, (jPanel.getWidth() / 2) - (int) (Math.sin((Math.abs(i)) * (Math.PI / 5)) * (jPanel.getWidth() / 2 - 30)));
+                g.drawString(i + "", ((dialPanel.getWidth() / 2) - (int) (Math.cos((Math.abs(i)) * (Math.PI / 5)) * (dialPanel.getWidth() / 2 - 30))) - 5, (dialPanel.getWidth() / 2) - (int) (Math.sin((Math.abs(i)) * (Math.PI / 5)) * (dialPanel.getWidth() / 2 - 30)) + 5);
             }
         }
     }
