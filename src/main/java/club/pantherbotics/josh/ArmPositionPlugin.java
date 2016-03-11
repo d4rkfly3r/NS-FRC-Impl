@@ -19,10 +19,8 @@ import java.awt.*;
 @Plugin(name = "Arm Position Widget")
 public class ArmPositionPlugin {
 
-    double currentPosition = 1;
-
+    double currentPosition = 0;
     JPanel dialPanel = new DialJPanel();
-
 
     @Inject
     MainGUI mainGUI;
@@ -37,7 +35,7 @@ public class ArmPositionPlugin {
         dialPanel.setOpaque(false);
         dialPanel.addMouseListener(dragListener);
         dialPanel.addMouseMotionListener(dragListener);
-        dialPanel.setSize(300, 300);
+        dialPanel.setSize(300, 150);
         dialPanel.setLocation(200, 200);
 
         mainGUI.add(dialPanel);
@@ -68,15 +66,16 @@ public class ArmPositionPlugin {
 //            g.setColor(Color.CYAN);
 //            g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(Color.BLACK);
-            g.fillArc(5, 5, dialPanel.getWidth() - 10, dialPanel.getHeight() - 10, -10, 200);
-            g.setColor(Color.red);
-            g.drawLine(dialPanel.getWidth() / 2, dialPanel.getHeight() / 2, (dialPanel.getWidth() / 2) - (int) (Math.cos((Math.abs(currentPosition)) * (Math.PI / 5)) * (dialPanel.getWidth() / 2 - 40)), (dialPanel.getWidth() / 2) - (int) (Math.sin((Math.abs(currentPosition)) * (Math.PI / 5)) * (dialPanel.getWidth() / 2 - 40)));
-            g.fillArc(dialPanel.getWidth() / 2 - 10, dialPanel.getHeight() / 2 - 10, 20, 20, 0, 360);
+            g.fillArc(5, 5, dialPanel.getWidth() - 10, dialPanel.getHeight() * 2, -10, 200);
             g.setColor(Color.yellow);
             g.setFont(new Font("Arial", Font.BOLD, 16));
             for (int i = 0; i < 6; i++) {
-                g.drawString(i + "", ((dialPanel.getWidth() / 2) - (int) (Math.cos((Math.abs(i)) * (Math.PI / 5)) * (dialPanel.getWidth() / 2 - 30))) - 5, (dialPanel.getWidth() / 2) - (int) (Math.sin((Math.abs(i)) * (Math.PI / 5)) * (dialPanel.getWidth() / 2 - 30)) + 5);
+                g.drawString(i + "", ((dialPanel.getWidth() / 2) - (int) (Math.cos((Math.abs(i)) * (Math.PI / 5)) * (dialPanel.getWidth() / 2 - 20))) - 5, (dialPanel.getHeight()) - (int) (Math.sin((Math.abs(i)) * (Math.PI / 5)) * (dialPanel.getHeight() - 20)));
             }
+            g.drawString("Arm Pos", dialPanel.getWidth() / 2 - 3 * 10, dialPanel.getHeight() / 2);
+            g.setColor(Color.red);
+            g.drawLine(dialPanel.getWidth() / 2, dialPanel.getHeight(), (dialPanel.getHeight()) - (int) (Math.cos((Math.abs(currentPosition)) * (Math.PI / 5)) * (dialPanel.getWidth() / 2 - 32)), (dialPanel.getWidth() / 2) - (int) (Math.sin((Math.abs(currentPosition)) * (Math.PI / 5)) * (dialPanel.getHeight() - 32)));
+            g.fillArc(dialPanel.getWidth() / 2 - 10, dialPanel.getHeight() - 10, 20, 20, 0, 360);
         }
     }
 }

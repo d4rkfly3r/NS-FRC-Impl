@@ -11,6 +11,8 @@ import us.jfreedman.src.ns.frc.common.packets.Packet99;
 import us.jfreedman.src.ns.frc.server.gui.MainGUI;
 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -22,7 +24,7 @@ import java.awt.event.ComponentEvent;
 @Plugin(name = "Basic Control Plugin")
 public class BasicControlPlugin {
 
-    private TextArea logTextArea = new TextArea();
+    private JTextArea logTextArea = new JTextArea();
     private JButton exitButton = new JButton("Exit");
     private JButton minimizeButton = new JButton("Minimize");
 
@@ -42,37 +44,53 @@ public class BasicControlPlugin {
         mainGUI.setLayout(null);
 
         logTextArea.setEditable(false);
+//        logTextArea.addCaretListener(e -> truncateLogText());
         logTextArea.setFont(new Font("Arial", Font.PLAIN, 18));
-        logTextArea.setSize(mainGUI.getWidth() / 3, mainGUI.getHeight() / 3);
-        logTextArea.setLocation(mainGUI.getWidth() - (logTextArea.getWidth()), mainGUI.getHeight() - (logTextArea.getHeight()));
-        mainGUI.add(logTextArea);
+        ((DefaultCaret) logTextArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
+        JScrollPane pane = new JScrollPane(logTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        pane.setSize(mainGUI.getWidth() / 3, mainGUI.getHeight() / 3);
+        pane.setLocation(mainGUI.getWidth() - (pane.getWidth()), mainGUI.getHeight() - (pane.getHeight()));
+        mainGUI.add(pane);
 
         minimizeButton.setFont(new Font("Arial", Font.BOLD, 40));
         minimizeButton.setBackground(Color.CYAN);
         minimizeButton.setSize(mainGUI.getWidth() / 3, 75);
-        minimizeButton.setLocation(mainGUI.getWidth() - (minimizeButton.getWidth()), mainGUI.getHeight() - logTextArea.getHeight() - minimizeButton.getHeight());
+        minimizeButton.setLocation(mainGUI.getWidth() - (minimizeButton.getWidth()), mainGUI.getHeight() - pane.getHeight() - minimizeButton.getHeight());
         mainGUI.add(minimizeButton);
 
         exitButton.setFont(new Font("Arial", Font.BOLD, 40));
         exitButton.setBackground(Color.red);
         exitButton.setSize(mainGUI.getWidth() / 3, 75);
-        exitButton.setLocation(mainGUI.getWidth() - (exitButton.getWidth()), mainGUI.getHeight() - logTextArea.getHeight() - minimizeButton.getHeight() - exitButton.getHeight());
+        exitButton.setLocation(mainGUI.getWidth() - (exitButton.getWidth()), mainGUI.getHeight() - pane.getHeight() - minimizeButton.getHeight() - exitButton.getHeight());
         mainGUI.add(exitButton);
 
         mainGUI.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                logTextArea.setSize(mainGUI.getWidth() / 3, mainGUI.getHeight() / 3);
-                logTextArea.setLocation(mainGUI.getWidth() - (logTextArea.getWidth()), mainGUI.getHeight() - (logTextArea.getHeight()));
+                pane.setSize(mainGUI.getWidth() / 3, mainGUI.getHeight() / 3);
+                pane.setLocation(mainGUI.getWidth() - (pane.getWidth()), mainGUI.getHeight() - (pane.getHeight()));
                 minimizeButton.setSize(mainGUI.getWidth() / 3, 75);
-                minimizeButton.setLocation(mainGUI.getWidth() - (minimizeButton.getWidth()), mainGUI.getHeight() - logTextArea.getHeight() - minimizeButton.getHeight());
+                minimizeButton.setLocation(mainGUI.getWidth() - (minimizeButton.getWidth()), mainGUI.getHeight() - pane.getHeight() - minimizeButton.getHeight());
                 exitButton.setSize(mainGUI.getWidth() / 3, 75);
-                exitButton.setLocation(mainGUI.getWidth() - (exitButton.getWidth()), mainGUI.getHeight() - logTextArea.getHeight() - minimizeButton.getHeight() - exitButton.getHeight());
+                exitButton.setLocation(mainGUI.getWidth() - (exitButton.getWidth()), mainGUI.getHeight() - pane.getHeight() - minimizeButton.getHeight() - exitButton.getHeight());
             }
         });
 
         mainGUI.lockWindow();
+    }
+
+    private void truncateLogText() {
+        int numLinesToTruncate = logTextArea.getLineCount() - 100;
+        if (numLinesToTruncate > 0) {
+            try {
+                int posLastLine = logTextArea.getLineEndOffset(numLinesToTruncate - 1);
+                logTextArea.replaceRange("", 0, posLastLine);
+            } catch (BadLocationException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Listener

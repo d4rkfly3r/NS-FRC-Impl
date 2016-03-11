@@ -21,8 +21,6 @@ public class MainClient {
         NS.addQueue(new Packet02(5), null, null);
         NS.addQueue(new Packet02(50000), null, null);
         NS.addQueue(new Packet03("Josh", "This is MIKE!"), null, null);
-//        NS.addQueue(new Packet05("Transmission", true), null, o -> NS.addQueue(new Packet05("Transmission", true), null, null));
-
         randomify();
     }
 
