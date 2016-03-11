@@ -11,6 +11,8 @@ import us.jfreedman.src.ns.frc.common.packets.Packet99;
 import us.jfreedman.src.ns.frc.server.gui.MainGUI;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
@@ -27,6 +29,7 @@ public class BasicControlPlugin {
     private JTextArea logTextArea = new JTextArea();
     private JButton exitButton = new JButton("Exit");
     private JButton minimizeButton = new JButton("Minimize");
+    JScrollPane pane;
 
     @Inject
     private
@@ -44,11 +47,26 @@ public class BasicControlPlugin {
         mainGUI.setLayout(null);
 
         logTextArea.setEditable(false);
-//        logTextArea.addCaretListener(e -> truncateLogText());
+        logTextArea.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                SwingUtilities.invokeLater(() -> truncateLogText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
         logTextArea.setFont(new Font("Arial", Font.PLAIN, 18));
         ((DefaultCaret) logTextArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
-        JScrollPane pane = new JScrollPane(logTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        pane = new JScrollPane(logTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         pane.setSize(mainGUI.getWidth() / 3, mainGUI.getHeight() / 3);
         pane.setLocation(mainGUI.getWidth() - (pane.getWidth()), mainGUI.getHeight() - (pane.getHeight()));
         mainGUI.add(pane);
@@ -66,6 +84,7 @@ public class BasicControlPlugin {
         mainGUI.add(exitButton);
 
         mainGUI.addComponentListener(new ComponentAdapter() {
+
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
@@ -82,6 +101,7 @@ public class BasicControlPlugin {
     }
 
     private void truncateLogText() {
+        ((DefaultCaret) logTextArea.getCaret()).setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
         int numLinesToTruncate = logTextArea.getLineCount() - 100;
         if (numLinesToTruncate > 0) {
             try {
@@ -91,6 +111,7 @@ public class BasicControlPlugin {
                 e.printStackTrace();
             }
         }
+        ((DefaultCaret) logTextArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
     }
 
     @Listener
