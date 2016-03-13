@@ -4,7 +4,7 @@ package us.jfreedman.src.ns.frc.common.packets;
  * Created by Joshua Freedman on 2/9/2016.
  * Project: NS-FRC-Impl
  */
-public class Packet03 extends KeyedPacket<Packet03> {
+public class Packet03 extends KeyedPacket<Packet03, String> {
 
     public Packet03(String string) {
         this(null, string);
@@ -16,6 +16,6 @@ public class Packet03 extends KeyedPacket<Packet03> {
     }
 
     public String getString() {
-        return (String) this.innerData;
+        return this.innerData;
     }
 }

@@ -62,9 +62,7 @@ public class ArmPositionPlugin {
             Graphics2D g = (Graphics2D) graphics;
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-            g.setStroke(new BasicStroke(3));
-//            g.setColor(Color.CYAN);
-//            g.fillRect(0, 0, getWidth(), getHeight());
+            g.setStroke(new BasicStroke(6));
             g.setColor(Color.BLACK);
             g.fillArc(5, 5, dialPanel.getWidth() - 10, dialPanel.getHeight() * 2, -10, 200);
             g.setColor(Color.yellow);

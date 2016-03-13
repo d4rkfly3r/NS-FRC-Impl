@@ -6,9 +6,9 @@ import java.io.Serializable;
  * Created by Joshua on 2/8/2016.
  * Project: NS-FRC-Impl
  */
-public abstract class Packet<T extends Packet> implements Serializable {
+public abstract class Packet<T extends Packet, I> implements Serializable {
 
-    protected Object innerData;
+    protected I innerData;
     protected String senderName;
     protected Type dataType;
     protected long timeout = -1;

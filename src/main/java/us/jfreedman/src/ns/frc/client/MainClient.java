@@ -27,6 +27,8 @@ public class MainClient {
     Random random = new Random();
 
     private void randomify() {
-        NS.addQueue(new Packet02("Arm Position", random.nextDouble() * 5), o -> randomify(), o -> randomify());
+        NS.addQueue(new Packet02("Arm Position", random.nextDouble() * 5), null, null);
+        NS.addQueue(new Packet02("Pressure", random.nextDouble() * 5), null, null);
+        randomify();
     }
 }

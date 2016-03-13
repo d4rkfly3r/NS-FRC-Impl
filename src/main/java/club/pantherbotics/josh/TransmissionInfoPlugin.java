@@ -1,4 +1,4 @@
-package club.pantherbotics;
+package club.pantherbotics.josh;
 
 import us.jfreedman.src.ns.frc.common.Listener;
 import us.jfreedman.src.ns.frc.common.Logger;

@@ -36,7 +36,7 @@ public class MainServer {
                     while (client.isConnected()) {
                         try {
                             Object unknown = objectInputStream.readObject();
-                            if (unknown instanceof Packet<?>) {
+                            if (unknown instanceof Packet<?, ?>) {
                                 PluginBus.getInstance().firePacket((Packet) unknown);
                             }
                         } catch (EOFException ignored) {

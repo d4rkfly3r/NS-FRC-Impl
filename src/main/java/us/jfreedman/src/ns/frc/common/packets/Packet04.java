@@ -1,18 +1,30 @@
 package us.jfreedman.src.ns.frc.common.packets;
 
-import java.awt.*;
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * Created by Joshua Freedman on 2/23/2016.
  * Project: NS-FRC-Impl
  */
-public class Packet04 extends KeyedPacket<Packet04> {
+public class Packet04 extends KeyedPacket<Packet04, byte[]> {
 
     int width, height;
 
     public Packet04(int width, int height, byte[] imageByteArray) {
         this(null, width, height, imageByteArray);
+    }
+
+    public Packet04(String key, int width, int height, BufferedImage image) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ImageIO.write(image, "png", bos);
+        this.key = key;
+        this.width = width;
+        this.height = height;
+        this.innerData = bos.toByteArray();
     }
 
     public Packet04(String key, int width, int height, byte[] imageByteArray) {
@@ -23,7 +35,7 @@ public class Packet04 extends KeyedPacket<Packet04> {
     }
 
     public byte[] getImageByteArray() {
-        return (byte[]) this.innerData;
+        return this.innerData;
     }
 
     public int getWidth() {
@@ -34,10 +46,15 @@ public class Packet04 extends KeyedPacket<Packet04> {
         return height;
     }
 
-    public Image getImage() {
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        bufferedImage.setRGB(0, 0, width, height, (int[]) this.innerData, 0, 0);
-        return bufferedImage;
+    public BufferedImage getImage() {
+        BufferedImage bufferedImage;
+        try {
+            bufferedImage = ImageIO.read(new ByteArrayInputStream(getImageByteArray()));
+            return bufferedImage;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
